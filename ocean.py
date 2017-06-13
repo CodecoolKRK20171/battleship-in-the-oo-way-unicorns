@@ -5,7 +5,8 @@ class Ocean:
         self.is_hidden = False
         self.coordinates = ()
 
-        rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        rows = range(1, 11)
+        columns = []
 
         for row in rows:
             columns.append(row)
