@@ -1,13 +1,14 @@
 from ocean import Ocean
+from ship import Ship
 class player:
 
     def __init__(self, name):
         self.name = name
         self.enemy_ocean = Ocean()
         self.player_ocean = Ocean()
-        init_ships_dict()
+        self.init_ships_dict()
 
-    def init_ships_dict():
+    def init_ships_dict(self):
         self.ship_dict = {}
         self.ship_dict['Carrier'] = Ship(5)
         self.ship_dict['Battleship'] = Ship(4)
@@ -34,8 +35,8 @@ class player:
         for x in range(-1, 2):
             for y in range(-1, ship_lenght+1):
                 if turn is True:
-                    if self.player_ocean.board.get[(column+y, row+x), None] is not None:
+                    if self.player_ocean.board.get((column+y, row+x)) is not None:
                         raise KeyError
                 elif turn is False:
-                    if self.player_ocean.board.get[(column+x, row+y), None] is not None:
+                    if self.player_ocean.board.get((column+x, row+y)) is not None:
                         raise KeyError
