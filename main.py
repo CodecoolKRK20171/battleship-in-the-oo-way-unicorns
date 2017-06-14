@@ -1,4 +1,4 @@
-from ship import Ship
+from player import Player
 import csv
 
 def show_screen(filename):
@@ -36,15 +36,10 @@ def define_ship_type(ship_types):
     user_ship_type = input("\nEnter a ship type: ").title()
 
     match = 0
-    for ship_type in ship_types:
-        if user_ship_type == ship_type:
-            ship_types.remove(ship_type)
-            match += 1
-
-    if match == 0:
+    if user_ship_type not in ship_types:
         raise NameError
 
-    return user_ship_type, ship_types
+    return user_ship_type
 
 
 def define_ship_coordinates():
@@ -60,12 +55,12 @@ def define_ship_coordinates():
     """
     user_row_number = int(input("Enter a row number: "))
     user_column_number = int(input("Enter a column number: "))
-    coordinates_range = range(1,11)
+    coordinates_range = range(10)
 
     if (user_row_number and user_column_number) not in coordinates_range:
         raise ValueError
 
-    coordinates = (user_row_number, user_column_number)
+    coordinates = (user_column_number, user_row_number)
 
     return coordinates
 
@@ -82,6 +77,7 @@ def define_ship_turn():
     """
     user_turn = input("Do you want to place the ship horizontally (put 'h')" +
                       " or vertically? (put 'v') ").lower()
+    print()
 
     if user_turn == "h":
         user_turn = True
@@ -104,7 +100,7 @@ def define_ship_placement(ship_types):
     """
 
     show_ship_types(ship_types)
-    user_ship_type, ship_types = define_ship_type(ship_types)
+    user_ship_type = define_ship_type(ship_types)
     coordinates = define_ship_coordinates()
     user_turn = define_ship_turn()
 
@@ -122,27 +118,39 @@ def show_ship_types(ship_types):
     for ship_type in ship_types:
         print(ship_type)
 
+def create_player():
+    name = input("Enter your name: ")
+    return Player(name)
+
 
 def main():
     """
     Handles game.
     """
+
     RED = '\033[91m'
     WHITE = '\033[0m'
     show_screen("hello_screen.csv")
     show_screen("instruction_screen.csv")
+    player1 = create_player()
+    print()
 
     ship_types = ["Carrier", "Battleship", "Cruiser",
                   "Submarine", "Destroyer"]
 
     while ship_types:
+        print(player1.player_ocean)
         try:
             user_ship_type, coordinates, user_turn = define_ship_placement(ship_types)
+            player1.add_ship_to_ocean(user_ship_type, coordinates, user_turn)
         except NameError:
-            print(RED + "\nWrong input mate!" + WHITE)
+            print(RED + "\nWrong input mate!\n" + WHITE)
         except ValueError:
-            print(RED + "\nCoordinates should be in a range from 1 to 10." + WHITE)
-        #TUTAJ TWORZENIE OBIEKTU STATECZKU
+            print(RED + "\nCoordinates should be in a range from 1 to 10.\n" + WHITE)
+        except KeyError:
+            print(RED + "\nYou can't place ship next to another or out of edge!\n"+ WHITE)
+        else:
+            ship_types.remove(user_ship_type)
 
 
 if __name__ == "__main__":
