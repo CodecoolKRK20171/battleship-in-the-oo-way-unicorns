@@ -2,16 +2,18 @@ class Ocean:
 
     def __init__(self):
         self.is_hidden = False
-        self.coordinates = ()
+        self.coordinates = []
         self.board = {}
 
         rows = range(1, 11)
-        columns = []
+        self.columns = []
 
         for row in rows:
-            columns.append(row)
-            for column in columns:
-                coordinates.append((column, row))
+            self.columns.append(row)
+            for column in self.columns:
+                self.coordinates.append((column, row))
+                if (row, column) not in self.coordinates:
+                    self.coordinates.append((row, column))
 
     def add_to_ocean(self, coord, item):
 
@@ -20,5 +22,7 @@ class Ocean:
     def add_water(self):
 
         for coordinate in self.coordinates:
-            if coordinate not in self.board.keys():
-                board[coordinate] = Water()
+            if coordinate not in list(self.board.keys()):
+                self.board[coordinate] = Water()
+
+x = Ocean()
