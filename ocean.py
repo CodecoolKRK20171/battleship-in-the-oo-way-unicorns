@@ -17,7 +17,7 @@ class Ocean:
 
     def add_to_ocean(self, coord, item):
 
-        if type(coord) == "tuple":
+        if type(coord) == tuple:
             if coord[0] and coord[1] in range(1, 11):
                 self.board[coord] = item
             else:
