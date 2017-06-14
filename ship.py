@@ -10,7 +10,14 @@ class Ship:
         Parameters:
         ----------
         length: int
+
+        Raises:
+        ------
+        TypeError: when length type isn't int
         """
+        if not isinstance(length, int):
+            raise TypeError
+
         self.length = length
         self.is_sunk = False
         self.is_hidden = False
@@ -20,13 +27,21 @@ class Ship:
             square_i = Square()
             self.square_list.append(square_i)
 
+
     def mark_square(self, index):
         """
         Mark a *Square* object in an attribute *ship* by given index.
         Parameters:
         ----------
         index: int
+
+        Raises:
+        ------
+        TypeError: when index type isn't int
         """
+        if not isinstance(index, int):
+            raise TypeError
+
         self.square_list[index - 1].mark()
         self.mark_is_sunk()
 
