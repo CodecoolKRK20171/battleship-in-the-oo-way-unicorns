@@ -23,6 +23,7 @@ class player:
         ship_lenght = len(ship.squer_list)
         column = coordinates[0]
         row = coordinates[1]
+        self.check_range(column, row, ship_lenght, turn)
         self.check_is_water(column, row, ship_lenght, turn)
         for value in range(ship_lenght):
             square = ship.square_list[value]
@@ -40,3 +41,12 @@ class player:
                 elif turn is False:
                     if self.player_ocean.board.get((column+x, row+y)) is not None:
                         raise KeyError
+
+    def check_range(self, column, row, ship_lenght, turn):
+        max_value = 9
+        if trun is True:
+            if column + ship_lenght > max_value:
+                raise KeyError
+        if turn is False:
+            if row + ship_lenght > max_value:
+                raise KeyError

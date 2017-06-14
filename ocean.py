@@ -23,7 +23,7 @@ class Ocean:
             if coord[0] and coord[1] in range(10):
                 self.board[coord] = item
             else:
-                raise ValueError("Coordinates do not fit on the board (10x10).")
+                raise ValueError ("Coordinates do not fit on the board (10x10).")
         else:
             raise TypeError("Invalid coordinate type (expected tuple).")
 
