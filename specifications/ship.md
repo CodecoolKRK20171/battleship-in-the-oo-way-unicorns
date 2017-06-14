@@ -1,5 +1,5 @@
 ### Class Ship
-This is the file containing the logic of the Ship class.
+This file contains the logic of the Ship class.
 
 __Attributes__
 
