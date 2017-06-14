@@ -5,7 +5,7 @@ class Ocean:
         self.coordinates = []
         self.board = {}
 
-        rows = range(1, 11)
+        rows = range(10)
         self.columns = []
 
         for row in rows:
@@ -18,7 +18,7 @@ class Ocean:
     def add_to_ocean(self, coord, item):
 
         if type(coord) == tuple:
-            if coord[0] and coord[1] in range(1, 11):
+            if coord[0] and coord[1] in range(10):
                 self.board[coord] = item
             else:
                 raise ValueError("Coordinates do not fit on the board (10x10).")
