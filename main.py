@@ -1,5 +1,6 @@
 from ship import Ship
 import csv
+
 def show_screen(filename):
     """
     Prints screen from a csv file.
@@ -14,6 +15,7 @@ def show_screen(filename):
         for line in hello_screen_reader:
             print(*line)
 
+
 def define_ship_type(ship_types):
     """
     Get ship type from a user and returns it.
@@ -25,6 +27,10 @@ def define_ship_type(ship_types):
     -------
     user_ship_type: str
     ship_types: list of str
+
+    Raises:
+    ------
+    NameError: when user's input isn't name of ship type from ship_types list
     """
 
     user_ship_type = input("\nEnter a ship type: ").title()
@@ -40,12 +46,17 @@ def define_ship_type(ship_types):
 
     return user_ship_type, ship_types
 
+
 def define_ship_coordinates():
     """
     Gets coordinates from a user.
     Returns:
     -------
     coordinates: tuple
+
+    Raises:
+    ------
+    ValueError: when user's input isn't in range from 1 to 10
     """
     user_row_number = int(input("Enter a row number: "))
     user_column_number = int(input("Enter a column number: "))
@@ -58,11 +69,16 @@ def define_ship_coordinates():
 
     return coordinates
 
+
 def define_ship_turn():
     """Gets a turn of a placement of ship from a user.
     Returns:
     -------
     user_turn: bool
+
+    Raises:
+    ------
+    NameError: when user's input isn't "y" or "v"
     """
     user_turn = input("Do you want to place the ship horizontally (put 'h')" +
                       " or vertically? (put 'v') ").lower()
@@ -75,6 +91,7 @@ def define_ship_turn():
         raise NameError
 
     return user_turn
+
 
 def define_ship_placement(ship_types):
     """
@@ -105,6 +122,7 @@ def show_ship_types(ship_types):
     for ship_type in ship_types:
         print(ship_type)
 
+
 def main():
     """
     Handles game.
@@ -125,8 +143,6 @@ def main():
         except ValueError:
             print(RED + "\nCoordinates should be in a range from 1 to 10." + WHITE)
         #TUTAJ TWORZENIE OBIEKTU STATECZKU
-
-
 
 
 if __name__ == "__main__":
