@@ -39,4 +39,3 @@ class player:
                 elif turn is False:
                     if self.player_ocean.board.get[(column+x, row+y), None] is not None:
                         raise KeyError
-                        r
