@@ -14,11 +14,11 @@ class Ship:
         self.length = length
         self.is_sunk = False
         self.is_hidden = False
-        self.ship = []
+        self.square_list = []
 
         for i in range(length):
             square_i = Square()
-            self.ship.append(square_i)
+            self.square_list.append(square_i)
 
     def mark_square(self, index):
         """
@@ -27,8 +27,9 @@ class Ship:
         ----------
         index: int
         """
-        self.ship[index - 1].mark()
+        self.square_list[index - 1].mark()
         self.mark_is_sunk()
+
 
     def mark_is_sunk(self):
         """
@@ -38,7 +39,7 @@ class Ship:
         -------
         self.is_sunk: bool
         """
-        for square in self.ship:
+        for square in self.square_list:
             if not square.is_marked:
                 return self.is_sunk
 
@@ -50,7 +51,7 @@ class Ship:
         Returns all elements of attribute *ship* formatted to string.
         """
         ship_str = ""
-        for square in self.ship:
+        for square in self.square_list:
             ship_str += str(square)
 
         return ship_str
