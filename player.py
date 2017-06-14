@@ -1,6 +1,7 @@
 from ocean import Ocean
 from ship import Ship
-class player:
+
+class Player:
 
     def __init__(self, name):
         self.name = name
@@ -9,6 +10,7 @@ class player:
         self.init_ships_dict()
 
     def init_ships_dict(self):
+
         self.ship_dict = {}
         self.ship_dict['Carrier'] = Ship(5)
         self.ship_dict['Battleship'] = Ship(4)
@@ -20,7 +22,7 @@ class player:
         if ship_name not in self.ship_dict.keys():
             raise NameError('Invalid ship name')
         ship = self.ship_dict[ship_name]
-        ship_lenght = len(ship.squer_list)
+        ship_lenght = len(ship.square_list)
         column = coordinates[0]
         row = coordinates[1]
         self.check_is_water(column, row, ship_lenght, turn)

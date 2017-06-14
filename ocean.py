@@ -18,12 +18,12 @@ class Ocean:
                     self.coordinates.append((row, column))
 
     def add_to_ocean(self, coord, item):
-
+        coord_range = range(1,11)
         if type(coord) == tuple:
-            if coord[0] and coord[1] in range(10):
+            if (coord[0] and coord[1]) in coord_range:
                 self.board[coord] = item
-            else:
-                raise ValueError("Coordinates do not fit on the board (10x10).")
+            #else:
+                #raise ValueError("Coordinates do not fit on the board (10x10).")
         else:
             raise TypeError("Invalid coordinate type (expected tuple).")
 
