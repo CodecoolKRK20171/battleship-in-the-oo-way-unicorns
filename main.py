@@ -136,6 +136,7 @@ def main():
                   "Submarine", "Destroyer"]
 
     while ship_types:
+        print(player1)
         try:
             user_ship_type, coordinates, user_turn = define_ship_placement(ship_types)
         except NameError:
