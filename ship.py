@@ -21,6 +21,7 @@ class Ship:
         self.length = length
         self.is_sunk = False
         self.is_hidden = False
+        self
         self.square_list = []
 
         for i in range(length):
