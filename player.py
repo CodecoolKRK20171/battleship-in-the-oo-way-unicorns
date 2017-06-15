@@ -1,6 +1,7 @@
 from ocean import Ocean
 from ship import Ship
 
+
 class Player:
 
     def __init__(self, name):
@@ -55,10 +56,26 @@ class Player:
                 raise KeyError
                 print('2', ship, ship_lenght)
 
+    def shoot_ship(self, enemy, shooted_object):
+        dict_of_ships = enemy.ship_dict
+        item_index = -1
+        for key in dict_of_ships:
+            ship = dict_of_ships[key]
+            for square in ship.square_list:
+                item_index += 1
+                if shooted_object is square:
+                    ship.mark_square(item_index)
+        return key
+
     def _copy_object(self, object_to_shoot, shoot_coordinates):
         self.enemy_ocean_representation.add_to_ocean(shoot_coordinates, object_to_shoot)
 
-    def shoot_and_check_if_is_sunk(self, enemy_ocean, shoot_coordinates):
-        object_to_shoot = enemy_ocean.get_item_from_ocean(shoot_coordinates)
-        object_to_shoot.mark()
-        self.copy_object(object_to_shoot, shoot_coordinates)
+    def shoot_and_check_if_is_sunk(self, enemy, shoot_coordinates):
+        object_to_shoot = enemy.player_ocean.get_item_from_ocean(shoot_coordinates)
+        self._copy_object(object_to_shoot, shoot_coordinates)
+        if type(object_to_shoot) is Square:
+            shooted_object_name  = shoot_ship(enemy, object_to_shoot)
+        elif type(object_to_shoot) is Water:
+            object_to_shoot.mark()
+            shooted_object_name = 'water'
+        return shooted_object_name
