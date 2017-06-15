@@ -1,5 +1,7 @@
 from ocean import Ocean
 from ship import Ship
+from square import Square
+from water import Water
 
 
 class Player:
@@ -57,12 +59,12 @@ class Player:
                 print('2', ship, ship_lenght)
 
     def shoot_ship(self, enemy, shooted_object):
-        dict_of_ships = enemy.ship_dict
-        item_index = -1
+        dict_of_ships = enemy.ship_dictx
         for key in dict_of_ships:
             ship = dict_of_ships[key]
-            for square in ship.square_list:
-                item_index += 1
+            ship_len = len(ship.square_list)
+            for index in range(ship_len):
+                square = ship.square_list[index]
                 if shooted_object is square:
                     ship.mark_square(item_index)
         return key
@@ -74,7 +76,7 @@ class Player:
         object_to_shoot = enemy.player_ocean.get_item_from_ocean(shoot_coordinates)
         self._copy_object(object_to_shoot, shoot_coordinates)
         if type(object_to_shoot) is Square:
-            shooted_object_name = shoot_ship(enemy, object_to_shoot)
+            shooted_object_name = self.shoot_ship(enemy, object_to_shoot)
         elif type(object_to_shoot) is Water:
             object_to_shoot.mark()
             shooted_object_name = 'water'
