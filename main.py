@@ -115,34 +115,28 @@ def show_ship_types(ship_types):
     ship_types: list of str
     """
     print("\nYou can create one of each type of ships: ")
-    for ship_type in ship_types:
-        print(ship_type)
+    for key, value in ship_types.items():
+        print("{}: {}".format(key, value))
 
 def create_player():
     name = input("Enter your name: ")
     return Player(name)
 
-
-def main():
-    """
-    Handles game.
-    """
+def place_ships_on_board(player):
 
     RED = '\033[91m'
     WHITE = '\033[0m'
-    show_screen("hello_screen.csv")
-    show_screen("instruction_screen.csv")
-    player1 = create_player()
-    print()
 
-    ship_types = ["Carrier", "Battleship", "Cruiser",
-                  "Submarine", "Destroyer"]
+    ship_types = {"Carrier": "five-masted", "Battleship": "four-masted", "Cruiser": "three-masted",
+                  "Submarine": "three-masted", "Destroyer": "two-masted"}
 
+    #ship_types = {"Carrier": "five-masted"}
     while ship_types:
-        print(player1.player_ocean)
+        print(player.player_ocean)
         try:
             user_ship_type, coordinates, user_turn = define_ship_placement(ship_types)
-            player1.add_ship_to_ocean(user_ship_type, coordinates, user_turn)
+            player.add_ship_to_ocean(user_ship_type, coordinates, user_turn)
+
         except NameError:
             print(RED + "\nWrong input mate!\n" + WHITE)
         except ValueError:
@@ -150,7 +144,22 @@ def main():
         except KeyError:
             print(RED + "\nYou can't place ship next to another or out of edge!\n"+ WHITE)
         else:
-            ship_types.remove(user_ship_type)
+            del ship_types[user_ship_type]
+
+
+def main():
+    """
+    Handles game.
+    """
+
+    show_screen("hello_screen.csv")
+    show_screen("instruction_screen.csv")
+    player1 = create_player()
+    place_ships_on_board(player1)
+    player2 = create_player()
+    place_ships_on_board(player2)
+
+
 
 
 if __name__ == "__main__":
