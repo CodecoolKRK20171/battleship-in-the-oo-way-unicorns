@@ -1,5 +1,6 @@
 from player import Player
 import csv
+import os
 
 class Colors:
 
@@ -137,7 +138,7 @@ def place_ships_on_board(player):
     #ship_types = {"Carrier": "five-masted", "Battleship": "four-masted", "Cruiser": "three-masted",
                   #"Submarine": "three-masted", "Destroyer": "two-masted"}
 
-    ship_types = {"Carrier": "five-masted"}
+    ship_types = {"Destroyer": "five-masted"}
 
     print(player.player_ocean)
     while ship_types:
@@ -157,7 +158,6 @@ def place_ships_on_board(player):
 
 def handle_shooting(shooter, defender):
 
-
     coordinates = None
     while coordinates == None:
         print("\n" + COLOR.BLUE + COLOR.BOLD + shooter.name + " TURN: " + COLOR.WHITE + COLOR.END)
@@ -166,11 +166,30 @@ def handle_shooting(shooter, defender):
         except ValueError:
             print(COLOR.RED + "\nCoordinates should be integers in a range from 1 to 10." + COLOR.WHITE)
         else:
-            shooter.shoot_and_check_if_is_sunk(defender.player_ocean, coordinates)
+            hit_object = shooter.shoot_and_check_if_is_sunk(defender, coordinates)
+            print("HIT OBJECT: ", hit_object)
+            if hit_object != "water":
+                print("wchodzi")
+                win = check_if_win(hit_object, defender)
+                if win:
+                    return win
+            coordinates = None
+
             print(COLOR.BLUE + "\nYour ocean:" + COLOR.WHITE)
             print(shooter.player_ocean)
             print(COLOR.BLUE + "\nEnemy's ocean:" + COLOR.WHITE)
             print(shooter.enemy_ocean_representation)
+
+def check_if_win(hit_object, player):
+    print(player.ship_dict[hit_object].is_sunk)
+    if player.ship_dict[hit_object].is_sunk:
+        player.sunken_ships.append_sunken_ship(hit_object)
+        print(COLOR.RED + "\n" + hit_object + " just sunk!" + COLOR.WHITE)
+
+    if len(player.sunken_ships) == 1:
+        return True
+
+    return False
 
 def main():
     """
@@ -184,9 +203,9 @@ def main():
     player2 = create_player()
     place_ships_on_board(player2)
     show_screen("fight_beginning.csv")
+    win = False
 
-
-    while True:
+    while not win:
         handle_shooting(player1, player2)
         handle_shooting(player2, player1)
 
