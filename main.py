@@ -1,6 +1,15 @@
 from player import Player
 import csv
 
+class Colors:
+
+    def __init__(self):
+        self.BLUE = '\033[94m'
+        self.WHITE = '\033[0m'
+        self.BOLD = '\033[1m'
+        self.END = '\033[0m'
+        self.RED = '\033[91m'
+
 def show_screen(filename):
     """
     Prints screen from a csv file.
@@ -124,8 +133,6 @@ def create_player():
 
 def place_ships_on_board(player):
 
-    RED = '\033[91m'
-    WHITE = '\033[0m'
 
     #ship_types = {"Carrier": "five-masted", "Battleship": "four-masted", "Cruiser": "three-masted",
                   #"Submarine": "three-masted", "Destroyer": "two-masted"}
@@ -139,36 +146,32 @@ def place_ships_on_board(player):
             player.add_ship_to_ocean(user_ship_type, coordinates, user_turn)
             player.player_ocean.add_water()
         except NameError:
-            print(RED + "\nWrong input mate!\n" + WHITE)
+            print(COLOR.RED + "\nWrong input mate!\n" + COLOR.WHITE)
         except ValueError:
-            print(RED + "\nCoordinates should be in a range from 1 to 10.\n" + WHITE)
+            print(COLOR.RED + "\nCoordinates should be in a range from 1 to 10.\n" + COLOR.WHITE)
         except KeyError:
-            print(RED + "\nYou can't place ship next to another or out of edge!\n"+ WHITE)
+            print(COLOR.RED + "\nYou can't place ship next to another or out of edge!\n"+ COLOR.WHITE)
         else:
             print(player.player_ocean)
             del ship_types[user_ship_type]
-def szczelanko(player1, player2):
 
-    while True:
-        print("Szczelanko: ", player1.name)
-        coordinates = define_coordinates()
-        player1.shoot(player2.player_ocean, coordinates)
-        print(player1.name, "OCEAN")
-        print(player1.player_ocean)
-        print(player1.enemy_ocean_representation)
-        print(player2.name, "OCEAN")
-        print(player2.player_ocean)
-        print(player2.enemy_ocean_representation)
+def handle_shooting(shooter, defender):
 
-        print("Szczelanko: ", player2.name)
-        coordinates = define_coordinates()
-        player2.shoot(player1.player_ocean, coordinates)
-        print(player1.name, "OCEAN")
-        print(player1.player_ocean)
-        print(player1.enemy_ocean_representation)
-        print(player2.name, "OCEAN")
-        print(player2.player_ocean)
-        print(player2.enemy_ocean_representation)
+
+    coordinates = None
+    while coordinates == None:
+        print("\n" + COLOR.BLUE + COLOR.BOLD + shooter.name + " TURN: " + COLOR.WHITE + COLOR.END)
+        try:
+            coordinates = define_coordinates()
+        except ValueError:
+            print(COLOR.RED + "\nCoordinates should be integers in a range from 1 to 10." + COLOR.WHITE)
+        else:
+            shooter.shoot_and_check_if_is_sunk(defender.player_ocean, coordinates)
+            print(COLOR.BLUE + "\nYour ocean:" + COLOR.WHITE)
+            print(shooter.player_ocean)
+            print(COLOR.BLUE + "\nEnemy's ocean:" + COLOR.WHITE)
+            print(shooter.enemy_ocean_representation)
+
 def main():
     """
     Handles game.
@@ -180,17 +183,14 @@ def main():
     place_ships_on_board(player1)
     player2 = create_player()
     place_ships_on_board(player2)
-
-    
-
+    show_screen("fight_beginning.csv")
 
 
-    szczelanko(player1, player2)
-
-
-
-
+    while True:
+        handle_shooting(player1, player2)
+        handle_shooting(player2, player1)
 
 
 if __name__ == "__main__":
+    COLOR = Colors()
     main()

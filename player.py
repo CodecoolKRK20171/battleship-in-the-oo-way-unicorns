@@ -74,7 +74,7 @@ class Player:
         object_to_shoot = enemy.player_ocean.get_item_from_ocean(shoot_coordinates)
         self._copy_object(object_to_shoot, shoot_coordinates)
         if type(object_to_shoot) is Square:
-            shooted_object_name  = shoot_ship(enemy, object_to_shoot)
+            shooted_object_name = shoot_ship(enemy, object_to_shoot)
         elif type(object_to_shoot) is Water:
             object_to_shoot.mark()
             shooted_object_name = 'water'
