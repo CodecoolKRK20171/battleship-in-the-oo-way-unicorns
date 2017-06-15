@@ -1,15 +1,9 @@
 from player import Player
 import csv
 import os
+from colors import Colors
 
-class Colors:
 
-    def __init__(self):
-        self.BLUE = '\033[94m'
-        self.WHITE = '\033[0m'
-        self.BOLD = '\033[1m'
-        self.END = '\033[0m'
-        self.RED = '\033[91m'
 
 def show_screen(filename):
     """
@@ -134,18 +128,16 @@ def create_player():
 
 def place_ships_on_board(player):
 
+    ship_types = {"Carrier": "five-masted", "Battleship": "four-masted", "Cruiser": "three-masted",
+                  "Submarine": "three-masted", "Destroyer": "two-masted"}
 
-    #ship_types = {"Carrier": "five-masted", "Battleship": "four-masted", "Cruiser": "three-masted",
-                  #"Submarine": "three-masted", "Destroyer": "two-masted"}
 
-    ship_types = {"Destroyer": "five-masted"}
-
+    os.system("clear")
     print(player.player_ocean)
     while ship_types:
         try:
             user_ship_type, coordinates, user_turn = define_ship_placement(ship_types)
             player.add_ship_to_ocean(user_ship_type, coordinates, user_turn)
-            player.player_ocean.add_water()
         except NameError:
             print(COLOR.RED + "\nWrong input mate!\n" + COLOR.WHITE)
         except ValueError:
@@ -153,13 +145,19 @@ def place_ships_on_board(player):
         except KeyError:
             print(COLOR.RED + "\nYou can't place ship next to another or out of edge!\n"+ COLOR.WHITE)
         else:
+            os.system("clear")
             print(player.player_ocean)
             del ship_types[user_ship_type]
 
+    player.player_ocean.add_water()
+    os.system("clear")
+
 def handle_shooting(shooter, defender):
+
 
     coordinates = None
     while coordinates == None:
+
         print("\n" + COLOR.BLUE + COLOR.BOLD + shooter.name + " TURN: " + COLOR.WHITE + COLOR.END)
         print_oceans(shooter)
         try:
@@ -167,9 +165,16 @@ def handle_shooting(shooter, defender):
         except ValueError:
             print(COLOR.RED + "\nCoordinates should be integers in a range from 1 to 10." + COLOR.WHITE)
         else:
-            hit_object = shooter.shoot_and_check_if_is_sunk(defender, coordinates)
             print_oceans(shooter)
+            os.system("clear")
+            hit_object = shooter.shoot_and_check_if_is_sunk(defender, coordinates)
+            if hit_object != "water":
+                win = check_if_win(hit_object, defender)
+                if win:
+                    return win
+                coordinates = None
 
+    return False
 
 
 def print_oceans(shooter):
@@ -180,15 +185,16 @@ def print_oceans(shooter):
     print(shooter.enemy_ocean_representation)
 
 def check_if_win(hit_object, player):
-    print(player.ship_dict[hit_object].is_sunk)
+
     if player.ship_dict[hit_object].is_sunk:
-        player.sunken_ships.append_sunken_ship(hit_object)
+        player.append_sunken_ship(hit_object)
         print(COLOR.RED + "\n" + hit_object + " just sunk!" + COLOR.WHITE)
 
-    if len(player.sunken_ships) == 1:
+    if len(player.sunken_ships) == 5:
         return True
 
     return False
+
 
 def main():
     """
@@ -204,9 +210,19 @@ def main():
     show_screen("fight_beginning.csv")
     win = False
 
-    while not win:
-        handle_shooting(player1, player2)
-        handle_shooting(player2, player1)
+    while True:
+
+        player1_win = handle_shooting(player1, player2)
+
+        if player1_win:
+            break
+
+        player2_win = handle_shooting(player2, player1)
+
+        if player2_win:
+            break
+
+    show_screen("win.csv")
 
 
 if __name__ == "__main__":

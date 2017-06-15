@@ -11,6 +11,10 @@ class Player:
         self.enemy_ocean_representation = Ocean()
         self.player_ocean = Ocean()
         self.init_ships_dict()
+        self.sunken_ships = []
+
+    def append_sunken_ship(self, hit_object):
+        self.sunken_ships.append(hit_object)
 
     def init_ships_dict(self):
 
@@ -48,26 +52,25 @@ class Player:
                         raise KeyError
 
     def check_range(self, column, row, ship_lenght, turn):
-        max_value = 9
+        max_value = 10
         if turn is True:
             if column + ship_lenght > max_value:
                 raise KeyError
-                print('1', ship_lenght)
         if turn is False:
             if row + ship_lenght > max_value:
+
                 raise KeyError
-                print('2', ship, ship_lenght)
 
     def shoot_ship(self, enemy, shooted_object):
         dict_of_ships = enemy.ship_dict
-        item_index = -1
         for key in dict_of_ships:
+            item_index = -1
             ship = dict_of_ships[key]
             for square in ship.square_list:
                 item_index += 1
                 if shooted_object is square:
                     ship.mark_square(item_index)
-        return key
+                    return key
 
     def _copy_object(self, object_to_shoot, shoot_coordinates):
         self.enemy_ocean_representation.add_to_ocean(shoot_coordinates, object_to_shoot)
@@ -80,4 +83,5 @@ class Player:
         elif type(object_to_shoot) is Water:
             object_to_shoot.mark()
             shooted_object_name = 'water'
+
         return shooted_object_name

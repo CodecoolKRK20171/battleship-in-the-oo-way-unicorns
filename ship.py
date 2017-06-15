@@ -1,6 +1,7 @@
 from square import Square
 from water import Water
 
+
 class Ship:
 
     def __init__(self, length):
@@ -69,6 +70,5 @@ class Ship:
         """
         ship_str = ""
         for square in self.square_list:
-            ship_str += str(square)
-
+                ship_str += str(square)
         return ship_str
