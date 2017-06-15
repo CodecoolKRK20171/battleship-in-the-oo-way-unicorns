@@ -53,6 +53,10 @@ class Player:
             if row + ship_lenght > max_value:
                 raise KeyError
 
-    def copy_object(self, enemy_ocean, shoot_coordinates):
-        object_to_check = enemy_ocean.get_item_from_ocean(shoot_coordinates)
-        self.enemy_ocean_representation.add_to_ocean(shoot_coordinates, object_to_check)
+    def copy_object(self, object_to_shoot, shoot_coordinates):
+        self.enemy_ocean_representation.add_to_ocean(shoot_coordinates, object_to_shoot)
+
+    def shoot(self, enemy_ocean, shoot_coordinates):
+        object_to_shoot = enemy_ocean.get_item_from_ocean(shoot_coordinates)
+        object_to_shoot.mark()
+        self.copy_object()
