@@ -34,7 +34,7 @@ class Ocean:
                 self.board[coordinate] = Water()
 
     def get_item_from_ocean(self, coordinates):
-        item = self.board[(coordinates)]
+        item = self.board[coordinates]
         return item
 
 

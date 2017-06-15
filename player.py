@@ -49,14 +49,16 @@ class Player:
         if trun is True:
             if column + ship_lenght > max_value:
                 raise KeyError
+                print('1', ship_lenght)
         if turn is False:
             if row + ship_lenght > max_value:
                 raise KeyError
+                print('2', ship, ship_lenght)
 
-    def copy_object(self, object_to_shoot, shoot_coordinates):
+    def _copy_object(self, object_to_shoot, shoot_coordinates):
         self.enemy_ocean_representation.add_to_ocean(shoot_coordinates, object_to_shoot)
 
-    def shoot(self, enemy_ocean, shoot_coordinates):
+    def shoot_and_check_if_is_sunk(self, enemy_ocean, shoot_coordinates):
         object_to_shoot = enemy_ocean.get_item_from_ocean(shoot_coordinates)
         object_to_shoot.mark()
-        self.copy_object()
+        _self.copy_object(object_to_shoot,  shoot_coordinates)
