@@ -5,7 +5,7 @@ class Player:
 
     def __init__(self, name):
         self.name = name
-        self.enemy_ocean = Ocean()
+        self.enemy_ocean_representation = Ocean()
         self.player_ocean = Ocean()
         self.init_ships_dict()
 
@@ -52,3 +52,7 @@ class Player:
         if turn is False:
             if row + ship_lenght > max_value:
                 raise KeyError
+
+    def copy_object(self, enemy_ocean, shoot_coordinates):
+        object_to_check = enemy_ocean.get_item_from_ocean(shoot_coordinates)
+        self.enemy_ocean_representation.add_to_ocean(shoot_coordinates, object_to_check)
