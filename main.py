@@ -161,24 +161,23 @@ def handle_shooting(shooter, defender):
     coordinates = None
     while coordinates == None:
         print("\n" + COLOR.BLUE + COLOR.BOLD + shooter.name + " TURN: " + COLOR.WHITE + COLOR.END)
+        print_oceans(shooter)
         try:
             coordinates = define_coordinates()
         except ValueError:
             print(COLOR.RED + "\nCoordinates should be integers in a range from 1 to 10." + COLOR.WHITE)
         else:
             hit_object = shooter.shoot_and_check_if_is_sunk(defender, coordinates)
-            print("HIT OBJECT: ", hit_object)
-            if hit_object != "water":
-                print("wchodzi")
-                win = check_if_win(hit_object, defender)
-                if win:
-                    return win
-            coordinates = None
+            print_oceans(shooter)
 
-            print(COLOR.BLUE + "\nYour ocean:" + COLOR.WHITE)
-            print(shooter.player_ocean)
-            print(COLOR.BLUE + "\nEnemy's ocean:" + COLOR.WHITE)
-            print(shooter.enemy_ocean_representation)
+
+
+def print_oceans(shooter):
+
+    print(COLOR.BLUE + "\nYour ocean:" + COLOR.WHITE)
+    print(shooter.player_ocean)
+    print(COLOR.BLUE + "\nEnemy's ocean:" + COLOR.WHITE)
+    print(shooter.enemy_ocean_representation)
 
 def check_if_win(hit_object, player):
     print(player.ship_dict[hit_object].is_sunk)
