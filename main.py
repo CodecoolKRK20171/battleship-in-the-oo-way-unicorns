@@ -145,7 +145,6 @@ def place_ships_on_board(player):
             print(player.player_ocean)
             del ship_types[user_ship_type]
 
-
 def main():
     """
     Handles game.

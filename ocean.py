@@ -18,24 +18,30 @@ class Ocean:
                     self.coordinates.append((row, column))
 
     def add_to_ocean(self, coord, item):
+
         coord_range = range(0, 10)
+
         if type(coord) == tuple:
             if (coord[0] and coord[1]) in coord_range:
                 self.board[coord] = item
-            #else:
-                #raise ValueError("Coordinates do not fit on the board (10x10).")
+
         else:
             raise TypeError("Invalid coordinate type (expected tuple).")
 
-    def add_water(self):
 
+    def add_water(self):
         for coordinate in self.coordinates:
             if coordinate not in list(self.board.keys()):
                 self.board[coordinate] = Water()
 
+<<<<<<< Updated upstream
     def get_item_from_ocean(self, coordinates):
         item = self.board[(coordinates)]
         return item
+=======
+    def hide(self):
+        self.is_hidden = True
+>>>>>>> Stashed changes
 
 
     def __str__(self):
@@ -43,7 +49,7 @@ class Ocean:
         for y in range(0, 10):
             line = '{}|'.format(y)
             for x in range(0, 10):
-                if self.board.get((x, y)) is not None:
+                if self.board.get((x, y)) is not None: #and not self.is_hidden:
                     board_element = self.board[(x, y)]
                 elif self.board.get((x, y)) is None:
                     board_element = ' '
