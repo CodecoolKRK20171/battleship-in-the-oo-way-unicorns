@@ -130,13 +130,11 @@ def place_ships_on_board(player):
     ship_types = {"Carrier": "five-masted", "Battleship": "four-masted", "Cruiser": "three-masted",
                   "Submarine": "three-masted", "Destroyer": "two-masted"}
 
-    #ship_types = {"Carrier": "five-masted"}
+    print(player.player_ocean)
     while ship_types:
-        print(player.player_ocean)
         try:
             user_ship_type, coordinates, user_turn = define_ship_placement(ship_types)
             player.add_ship_to_ocean(user_ship_type, coordinates, user_turn)
-
         except NameError:
             print(RED + "\nWrong input mate!\n" + WHITE)
         except ValueError:
@@ -144,6 +142,7 @@ def place_ships_on_board(player):
         except KeyError:
             print(RED + "\nYou can't place ship next to another or out of edge!\n"+ WHITE)
         else:
+            print(player.player_ocean)
             del ship_types[user_ship_type]
 
 
