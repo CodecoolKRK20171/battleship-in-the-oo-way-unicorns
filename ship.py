@@ -61,6 +61,8 @@ class Ship:
         self.is_sunk = True
         return self.is_sunk
 
+    
+
     def __str__(self):
         """
         Returns all elements of attribute *ship* formatted to string.

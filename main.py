@@ -42,7 +42,7 @@ def define_ship_type(ship_types):
     return user_ship_type
 
 
-def define_ship_coordinates():
+def define_coordinates():
     """
     Gets coordinates from a user.
     Returns:
@@ -101,7 +101,7 @@ def define_ship_placement(ship_types):
 
     show_ship_types(ship_types)
     user_ship_type = define_ship_type(ship_types)
-    coordinates = define_ship_coordinates()
+    coordinates = define_coordinates()
     user_turn = define_ship_turn()
 
     return user_ship_type, coordinates, user_turn
@@ -127,14 +127,17 @@ def place_ships_on_board(player):
     RED = '\033[91m'
     WHITE = '\033[0m'
 
-    ship_types = {"Carrier": "five-masted", "Battleship": "four-masted", "Cruiser": "three-masted",
-                  "Submarine": "three-masted", "Destroyer": "two-masted"}
+    #ship_types = {"Carrier": "five-masted", "Battleship": "four-masted", "Cruiser": "three-masted",
+                  #"Submarine": "three-masted", "Destroyer": "two-masted"}
+
+    ship_types = {"Carrier": "five-masted"}
 
     print(player.player_ocean)
     while ship_types:
         try:
             user_ship_type, coordinates, user_turn = define_ship_placement(ship_types)
             player.add_ship_to_ocean(user_ship_type, coordinates, user_turn)
+            player.player_ocean.add_water()
         except NameError:
             print(RED + "\nWrong input mate!\n" + WHITE)
         except ValueError:
@@ -144,7 +147,28 @@ def place_ships_on_board(player):
         else:
             print(player.player_ocean)
             del ship_types[user_ship_type]
+def szczelanko(player1, player2):
 
+    while True:
+        print("Szczelanko: ", player1.name)
+        coordinates = define_coordinates()
+        player1.shoot(player2.player_ocean, coordinates)
+        print(player1.name, "OCEAN")
+        print(player1.player_ocean)
+        print(player1.enemy_ocean_representation)
+        print(player2.name, "OCEAN")
+        print(player2.player_ocean)
+        print(player2.enemy_ocean_representation)
+
+        print("Szczelanko: ", player2.name)
+        coordinates = define_coordinates()
+        player2.shoot(player1.player_ocean, coordinates)
+        print(player1.name, "OCEAN")
+        print(player1.player_ocean)
+        print(player1.enemy_ocean_representation)
+        print(player2.name, "OCEAN")
+        print(player2.player_ocean)
+        print(player2.enemy_ocean_representation)
 def main():
     """
     Handles game.
@@ -156,6 +180,14 @@ def main():
     place_ships_on_board(player1)
     player2 = create_player()
     place_ships_on_board(player2)
+
+    
+
+
+
+    szczelanko(player1, player2)
+
+
 
 
 

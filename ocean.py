@@ -34,14 +34,11 @@ class Ocean:
             if coordinate not in list(self.board.keys()):
                 self.board[coordinate] = Water()
 
-<<<<<<< Updated upstream
+
     def get_item_from_ocean(self, coordinates):
-        item = self.board[(coordinates)]
+        item = self.board[coordinates]
         return item
-=======
-    def hide(self):
-        self.is_hidden = True
->>>>>>> Stashed changes
+
 
 
     def __str__(self):
