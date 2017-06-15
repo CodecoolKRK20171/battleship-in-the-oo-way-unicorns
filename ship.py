@@ -21,7 +21,6 @@ class Ship:
         self.length = length
         self.is_sunk = False
         self.is_hidden = False
-        self
         self.square_list = []
 
         for i in range(length):
@@ -43,7 +42,7 @@ class Ship:
         if not isinstance(index, int):
             raise TypeError
 
-        self.square_list[index - 1].mark()
+        self.square_list[index].mark()
         self.mark_is_sunk()
 
 
@@ -62,7 +61,7 @@ class Ship:
         self.is_sunk = True
         return self.is_sunk
 
-    
+
 
     def __str__(self):
         """

@@ -61,4 +61,4 @@ class Player:
     def shoot_and_check_if_is_sunk(self, enemy_ocean, shoot_coordinates):
         object_to_shoot = enemy_ocean.get_item_from_ocean(shoot_coordinates)
         object_to_shoot.mark()
-        self.copy_object(object_to_shoot, shoot_coordinates)
+        self._copy_object(object_to_shoot, shoot_coordinates)
