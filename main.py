@@ -4,7 +4,6 @@ import os
 from colors import Colors
 
 
-
 def show_screen(filename):
     """
     Prints screen from a csv file.
@@ -122,15 +121,29 @@ def show_ship_types(ship_types):
     for key, value in ship_types.items():
         print("{}: {}".format(key, value))
 
+
 def create_player():
+    """
+    Asks player for a name, then returns it.
+    Returns:
+    --------
+    Player(name): Player()
+    """
+
     name = input("Enter your name: ")
     return Player(name)
 
+
 def place_ships_on_board(player):
+    """
+    Places ships on board on desired coordinates.
+    Parameters:
+    -----------
+    player: Player()
+    """
 
     ship_types = {"Carrier": "five-masted", "Battleship": "four-masted", "Cruiser": "three-masted",
                   "Submarine": "three-masted", "Destroyer": "two-masted"}
-
 
     os.system("clear")
     print(player.player_ocean)
@@ -143,7 +156,7 @@ def place_ships_on_board(player):
         except ValueError:
             print(COLOR.RED + "\nCoordinates should be in a range from 1 to 10.\n" + COLOR.WHITE)
         except KeyError:
-            print(COLOR.RED + "\nYou can't place ship next to another or out of edge!\n"+ COLOR.WHITE)
+            print(COLOR.RED + "\nYou can't place ship next to another or out of edge!\n" + COLOR.WHITE)
         else:
             os.system("clear")
             print(player.player_ocean)
@@ -152,11 +165,23 @@ def place_ships_on_board(player):
     player.player_ocean.add_water()
     os.system("clear")
 
-def handle_shooting(shooter, defender):
 
+def handle_shooting(shooter, defender):
+    """
+    Asks shooter for shot info, processed the shot and it's repercussions,
+    Parameters:
+    -----------
+    shooter: Player()
+    defender: Player()
+
+    Returns:
+    --------
+    win: bool
+    True/False: bool
+    """
 
     coordinates = None
-    while coordinates == None:
+    while coordinates is None:
 
         print("\n" + COLOR.BLUE + COLOR.BOLD + shooter.name + " TURN: " + COLOR.WHITE + COLOR.END)
         print_oceans(shooter)
@@ -178,13 +203,27 @@ def handle_shooting(shooter, defender):
 
 
 def print_oceans(shooter):
+    """
+    Prints out shooter's boards, one visible with his ships, one hidden for enemy.
+    """
 
     print(COLOR.BLUE + "\nYour ocean:" + COLOR.WHITE)
     print(shooter.player_ocean)
     print(COLOR.BLUE + "\nEnemy's ocean:" + COLOR.WHITE)
     print(shooter.enemy_ocean_representation)
 
+
 def check_if_win(hit_object, player):
+    """
+    Checks if player has any ships left.
+    Parameters:
+    -----------
+    hit_object: str
+    player: Player()
+
+    Returns:
+    True/False: bool
+    """
 
     if player.ship_dict[hit_object].is_sunk:
         player.append_sunken_ship(hit_object)
@@ -198,7 +237,7 @@ def check_if_win(hit_object, player):
 
 def main():
     """
-    Handles game.
+    Handles game logic.
     """
 
     show_screen("hello_screen.csv")
